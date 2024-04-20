@@ -310,7 +310,7 @@ const jsRuntime = `
 	let net = require('net');
 	let readline = require('readline');
 	let rl = readline.createInterface({input: process.stdin});
-	rl.on('line', function(line) {
+	rl.on('line', async function(line) {
 		let socket = new net.Socket();
 		let token = line.split(":")[0];
 		socket.connect(line.split(":")[1], function() {
@@ -334,9 +334,9 @@ const jsRuntime = `
 					}
 					let ret;
 					try {
-						ret = 'v'+eval.call(global, js);
+						ret = 'v' + await eval.call(global, js);
 					} catch (e) {
-						ret = 'e'+e;
+						ret = 'e' + e;
 					}
 					output = Buffer.concat([
 						output, 
